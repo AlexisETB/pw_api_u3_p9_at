@@ -18,9 +18,9 @@ public class Estudiante extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estudiante_seq")
-    private Integer id;
-    private String nombre;
-    private String apellido;
-    private LocalDateTime fechaNac;
+    public Integer id;
+    public String nombre;
+    public String apellido;
+    public LocalDateTime fechaNac;
 
 }
