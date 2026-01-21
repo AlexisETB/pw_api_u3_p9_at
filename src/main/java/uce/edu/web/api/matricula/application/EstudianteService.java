@@ -33,6 +33,8 @@ public class EstudianteService {
         estu.nombre = est.nombre;
         estu.apellido = est.apellido;
         estu.fechaNac = est.fechaNac;
+        estu.provincia = est.provincia;
+        estu.genero = est.genero;
         // No es necesario persiste, gracias el dirty checking de hibernate ya que
         // detecta automaticamente los cambios
     }
@@ -49,11 +51,25 @@ public class EstudianteService {
         if (est.fechaNac != null) {
             estu.fechaNac = est.fechaNac;
         }
+        if (est.provincia != null) {
+            estu.provincia = est.provincia;
+        }
+        if (est.genero != null) {
+            estu.genero = est.genero;
+        }
 
     }
 
     @Transactional
     public void eliminar(Integer id) {
         this.estudianteRepository.deleteById(id.longValue());
+    }
+
+    public List<Estudiante> buscarPorProvincia(String provincia) {
+        return this.estudianteRepository.find("provincia", provincia).list();
+    }
+
+    public List<Estudiante> buscarPorProvinciaGenero(String provincia, String genero) {
+        return this.estudianteRepository.find("provincia = ?1 and genero = ?2", provincia, genero).list();
     }
 }
