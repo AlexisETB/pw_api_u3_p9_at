@@ -47,6 +47,7 @@ public class MateriaResource {
     @POST
     @Path("")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response guardar(Materia materia) {
         this.materiaService.crearMateria(materia);
         return Response.status(Response.Status.CREATED).entity(materia).build();
