@@ -1,11 +1,13 @@
 package uce.edu.web.api.matricula.application;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import uce.edu.web.api.matricula.application.representation.HijosRepresentation;
 import uce.edu.web.api.matricula.domain.Hijo;
 import uce.edu.web.api.matricula.infrastructure.HijoRepository;
 
@@ -26,8 +28,12 @@ public class HijoService {
     }
 
     // READ - Buscar hijos por ID del estudiante
-    public List<Hijo> buscarPorIdEstudiante(Integer estudianteId) {
-        return this.hijoRepository.buscarPorIdEstudiante(estudianteId);
+    public List<HijosRepresentation> buscarPorIdEstudiante(Integer estudianteId) {
+        List<HijosRepresentation> lista = new ArrayList<>();
+        for (Hijo h : this.hijoRepository.buscarPorIdEstudiante(estudianteId)) {
+            lista.add(this.mapperToHijoR(h));
+        }
+        return lista;
     }
 
     // CREATE - Crear un nuevo hijo
@@ -58,4 +64,21 @@ public class HijoService {
     public long eliminarPorIdEstudiante(Integer estudianteId) {
         return this.hijoRepository.delete("estudiante.id", estudianteId);
     }
+
+    private HijosRepresentation mapperToHijoR(Hijo hijo) {
+        HijosRepresentation hr = new HijosRepresentation();
+        hr.id = hijo.id;
+        hr.nombre = hijo.nombre;
+        hr.apellido = hijo.apellido;
+        return hr;
+    }
+
+    private Hijo mapperToHijo(HijosRepresentation hr) {
+        Hijo hijo = new Hijo();
+        hijo.id = hr.id;
+        hijo.nombre = hr.nombre;
+        hijo.apellido = hr.apellido;
+        return hijo;
+    }
+
 }
