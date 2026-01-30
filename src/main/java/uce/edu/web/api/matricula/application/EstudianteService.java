@@ -35,35 +35,38 @@ public class EstudianteService {
 
     @Transactional
     public void actualizar(Integer id, EstudianteRepresentation est) {
-        Estudiante estu = this.mapperToE(this.consultarPorId(id));
-        estu.nombre = est.nombre;
-        estu.apellido = est.apellido;
-        estu.fechaNac = est.fechaNac;
-        estu.provincia = est.provincia;
-        estu.genero = est.genero;
-        // No es necesario persiste, gracias el dirty checking de hibernate ya que
-        // detecta automaticamente los cambios
+        Estudiante estu = this.estudianteRepository.findById(id.longValue());
+        if (estu != null) {
+            estu.nombre = est.nombre;
+            estu.apellido = est.apellido;
+            estu.fechaNac = est.fechaNac;
+            estu.provincia = est.provincia;
+            estu.genero = est.genero;
+            // No es necesario persistir, gracias al dirty checking de hibernate ya que
+            // detecta automaticamente los cambios
+        }
     }
 
     @Transactional
     public void actualizarParcial(Integer id, EstudianteRepresentation est) {
-        Estudiante estu = this.mapperToE(this.consultarPorId(id));
-        if (est.nombre != null) {
-            estu.nombre = est.nombre;
+        Estudiante estu = this.estudianteRepository.findById(id.longValue());
+        if (estu != null) {
+            if (est.nombre != null) {
+                estu.nombre = est.nombre;
+            }
+            if (est.apellido != null) {
+                estu.apellido = est.apellido;
+            }
+            if (est.fechaNac != null) {
+                estu.fechaNac = est.fechaNac;
+            }
+            if (est.provincia != null) {
+                estu.provincia = est.provincia;
+            }
+            if (est.genero != null) {
+                estu.genero = est.genero;
+            }
         }
-        if (est.apellido != null) {
-            estu.apellido = est.apellido;
-        }
-        if (est.fechaNac != null) {
-            estu.fechaNac = est.fechaNac;
-        }
-        if (est.provincia != null) {
-            estu.provincia = est.provincia;
-        }
-        if (est.genero != null) {
-            estu.genero = est.genero;
-        }
-
     }
 
     @Transactional

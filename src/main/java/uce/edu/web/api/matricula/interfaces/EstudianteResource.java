@@ -22,7 +22,6 @@ import uce.edu.web.api.matricula.application.HijoService;
 import uce.edu.web.api.matricula.application.representation.EstudianteRepresentation;
 import uce.edu.web.api.matricula.application.representation.HijosRepresentation;
 import uce.edu.web.api.matricula.application.representation.LinkDTO;
-import uce.edu.web.api.matricula.domain.Estudiante;
 
 @Path("/estudiantes")
 public class EstudianteResource {
